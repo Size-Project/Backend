@@ -3,6 +3,10 @@ package com.dailyhome.back.configuration;
 import com.dailyhome.back.security.JwtAuthenticationEntryPoint;
 import com.dailyhome.back.security.JwtAuthenticationFilter;
 import com.dailyhome.back.security.JwtAuthorizationFilter;
+import com.dailyhome.back.security.oauth2.CustomAuthenticationFailureHandler;
+import com.dailyhome.back.security.oauth2.CustomAuthenticationSuccessHandler;
+import com.dailyhome.back.security.oauth2.HttpCookieOAuth2AuthorizationRequestRepository;
+import com.dailyhome.back.security.oauth2.Oauth2UserPrincipalService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -18,6 +22,23 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
+    private final Oauth2UserPrincipalService oauth2UserPrincipalService;
+    private final CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler;
+    private final CustomAuthenticationFailureHandler customAuthenticationFailureHandler;
+    private final HttpCookieOAuth2AuthorizationRequestRepository httpCookieOAuth2AuthorizationRequestRepository;
+
+    public WebSecurityConfiguration(
+            Oauth2UserPrincipalService oauth2UserPrincipalService,
+            CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler,
+            CustomAuthenticationFailureHandler customAuthenticationFailureHandler,
+            HttpCookieOAuth2AuthorizationRequestRepository httpCookieOAuth2AuthorizationRequestRepository
+    ) {
+        this.oauth2UserPrincipalService = oauth2UserPrincipalService;
+        this.customAuthenticationSuccessHandler = customAuthenticationSuccessHandler;
+        this.customAuthenticationFailureHandler = customAuthenticationFailureHandler;
+        this.httpCookieOAuth2AuthorizationRequestRepository = httpCookieOAuth2AuthorizationRequestRepository;
+    }
+
     @Bean
     public JwtAuthenticationFilter jwtAuthenticationFilter() throws Exception {
         JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter();
@@ -29,6 +50,11 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Bean
     public JwtAuthorizationFilter jwtAuthorizationFilter() {
         return new JwtAuthorizationFilter();
+    }
+
+    @Bean
+    public HttpCookieOAuth2AuthorizationRequestRepository cookieAuthorizationRequestRepository() {
+        return new HttpCookieOAuth2AuthorizationRequestRepository();
     }
 
     @Bean
@@ -66,7 +92,18 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .anyRequest().permitAll()
                 .and()
                 .logout()
-                .logoutSuccessUrl("/");
+                .logoutSuccessUrl("/")
+                .and()
+                .oauth2Login()
+                .authorizationEndpoint()
+                .baseUri("/oauth2/authorization")
+                .authorizationRequestRepository(cookieAuthorizationRequestRepository())
+                .and()
+                .userInfoEndpoint()
+                .userService(oauth2UserPrincipalService)
+                .and()
+                .successHandler(customAuthenticationSuccessHandler)
+                .failureHandler(customAuthenticationFailureHandler);
 
         http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
         http.addFilterBefore(jwtAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
