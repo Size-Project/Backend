@@ -19,7 +19,7 @@ public class UserController {
         this.userService = userService;
     }
 
-    @PostMapping("/")
+    @PostMapping("")
     public ResponseEntity<?> registerUser(@RequestBody UserSignUpRequest userSignUpRequest) {
         userService.save(userSignUpRequest);
         return ResponseEntity.ok("success");
