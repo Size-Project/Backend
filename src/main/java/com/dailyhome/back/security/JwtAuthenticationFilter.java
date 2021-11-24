@@ -28,7 +28,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         log.info("JwtAuthenticationFilter.attemptAuthentication");
         if (!request.getMethod().equals("POST")) {
             throw new AuthenticationServiceException(
-                    "Authentication method not supported: " + request.getMethod());
+                    "지원하지않는 HTTP 메소드입니다. " + request.getMethod());
         }
 
         UserLoginRequest loginRequest;
