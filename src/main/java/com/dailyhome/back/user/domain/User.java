@@ -1,12 +1,10 @@
 package com.dailyhome.back.user.domain;
 
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
+@Setter
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
@@ -23,10 +21,8 @@ public class User {
 
     private String name;
 
-    @Embedded
-    private Address address;
-
-    private String zip;
+    private String provider;
+    private String providerId;
 
     @Builder
     public User(
@@ -35,15 +31,15 @@ public class User {
             String password,
             String email,
             String name,
-            Address address,
-            String zip
+            String provider,
+            String providerId
     ) {
         this.id = id;
         this.accountId = accountId;
         this.password = password;
         this.email = email;
         this.name = name;
-        this.address = address;
-        this.zip = zip;
+        this.provider = provider;
+        this.providerId = providerId;
     }
 }
