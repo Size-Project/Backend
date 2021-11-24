@@ -1,0 +1,7 @@
+ifndef::snippets[]
+:snippets: ./build/generated-snippets
+endif::[]
+
+include::{snippets}/item/http-request.adoc[]
+include::{snippets}/item/request-body.adoc[]
+include::{snippets}/item/response-body.adoc[]

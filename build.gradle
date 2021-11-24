@@ -1,7 +1,8 @@
 plugins {
     id 'org.springframework.boot' version '2.6.0'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
-    id 'org.asciidoctor.convert' version '1.5.8'
+//    id 'org.asciidoctor.convert' version '1.5.8'
+    id 'org.asciidoctor.jvm.convert' version '3.3.2'
     id 'java'
 }
 
@@ -21,6 +22,14 @@ repositories {
 
 ext {
     set('snippetsDir', file("build/generated-snippets"))
+}
+
+bootJar {
+    dependsOn asciidoctor
+    copy {
+        from "${asciidoctor.outputDir}"
+        into 'BOOT-INF/classes/static/docs'
+    }
 }
 
 dependencies {
@@ -49,4 +58,10 @@ test {
 asciidoctor {
     inputs.dir snippetsDir
     dependsOn test
+}
+
+task copyDocument(type: Copy) {
+    dependsOn 'asciidoctor'
+    from file("build/docs/asciidoc")
+    into file("src/main/resources/static/docs")
 }
