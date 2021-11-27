@@ -1,5 +1,6 @@
 package com.dailyhome.back.item.service;
 
+import com.dailyhome.back.exception.item.ItemNotFoundException;
 import com.dailyhome.back.item.domain.Item;
 import com.dailyhome.back.item.domain.ItemRepository;
 import com.dailyhome.back.item.presentation.dto.response.ItemResponse;
@@ -23,9 +24,7 @@ public class ItemService {
     }
 
     public ItemResponse findById(Long id) {
-        Item item = itemRepository.findById(id).orElseThrow(() ->
-                new IllegalArgumentException("temporary exception"));
-
+        Item item = itemRepository.findById(id).orElseThrow(ItemNotFoundException::new);
         return ItemResponse.of(item);
     }
 

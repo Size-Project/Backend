@@ -18,17 +18,17 @@ public class OrderItem {
 
     private int orderPrice;
 
-    private int orderCount;
+    private int count;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "item_id")
     private Item item;
 
     @Builder
-    public OrderItem(Long id, int orderPrice, int orderCount, Item item) {
+    public OrderItem(Long id, int orderPrice, int count, Item item) {
         this.id = id;
         this.orderPrice = orderPrice;
-        this.orderCount = orderCount;
+        this.count = count;
         this.item = item;
     }
 }

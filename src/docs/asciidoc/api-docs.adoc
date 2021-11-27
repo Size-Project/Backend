@@ -2,6 +2,15 @@ ifndef::snippets[]
 :snippets: ./build/generated-snippets
 endif::[]
 
-include::{snippets}/item/http-request.adoc[]
-include::{snippets}/item/request-body.adoc[]
-include::{snippets}/item/response-body.adoc[]
+include::{snippets}/item/all/http-request.adoc[]
+include::{snippets}/item/all/response-body.adoc[]
+
+include::{snippets}/item/info/http-request.adoc[]
+include::{snippets}/item/info/response-body.adoc[]
+
+include::{snippets}/user/signup/http-request.adoc[]
+include::{snippets}/user/signup/request-body.adoc[]
+
+include::{snippets}/user/info/http-request.adoc[]
+include::{snippets}/user/info/request-headers.adoc[]
+include::{snippets}/user/info/response-body.adoc[]

@@ -1,5 +1,6 @@
 package com.dailyhome.back.item.domain;
 
+import com.dailyhome.back.item.domain.store.Store;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -14,6 +15,9 @@ public class Item {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @OneToOne
+    private Store store;
 
     private String name;
 
@@ -31,6 +35,7 @@ public class Item {
     @Builder
     public Item(
             Long id,
+            Store store,
             String name,
             String content,
             int price,
@@ -38,6 +43,7 @@ public class Item {
             String imageUrl,
             Category category) {
         this.id = id;
+        this.store = store;
         this.name = name;
         this.content = content;
         this.price = price;

@@ -1,4 +1,4 @@
-package com.dailyhome.back.item.domain.shop;
+package com.dailyhome.back.item.domain.store;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -6,10 +6,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-public class Shop {
+public class Store {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String shopName;
+    private String name;
+
+    private int grade;
+
+    private int count;
 }
