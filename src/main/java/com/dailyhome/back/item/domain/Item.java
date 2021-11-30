@@ -17,38 +17,55 @@ public class Item {
     private Long id;
 
     @OneToOne
+    private Category category;
+
+    @OneToOne
     private Store store;
 
     private String name;
 
-    private String content;
-
     private int price;
+
+    private int grade;
+
+    private int reviewCount;
+
+    private String content;
 
     private int stockQuantity;
 
     private String imageUrl;
 
-    @Enumerated(EnumType.STRING)
-    private Category category;
-
     @Builder
     public Item(
             Long id,
+            Category category,
             Store store,
             String name,
-            String content,
             int price,
+            int grade,
+            int reviewCount,
+            String content,
             int stockQuantity,
-            String imageUrl,
-            Category category) {
+            String imageUrl
+    ) {
         this.id = id;
+        this.category = category;
         this.store = store;
         this.name = name;
-        this.content = content;
         this.price = price;
+        this.grade = grade;
+        this.reviewCount = reviewCount;
+        this.content = content;
         this.stockQuantity = stockQuantity;
         this.imageUrl = imageUrl;
-        this.category = category;
+    }
+
+    public void addReviewCount() {
+        this.reviewCount++;
+    }
+
+    public void calculateGrade() {
+
     }
 }
