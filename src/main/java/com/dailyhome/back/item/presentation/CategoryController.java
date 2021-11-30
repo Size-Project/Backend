@@ -16,7 +16,6 @@ public class CategoryController {
     @GetMapping("")
     public ResponseEntity<CategoryResponse> findAllCategories() {
         CategoryResponse categoryResponses = categoryService.createCategoryTree();
-
         return ResponseEntity.ok(categoryResponses);
     }
 }
