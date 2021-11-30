@@ -1,9 +1,9 @@
 package com.dailyhome.back.user.presentation;
 
+import com.dailyhome.back.user.presentation.dto.request.UserLoginRequest;
 import com.dailyhome.back.user.presentation.dto.request.UserSignUpRequest;
 import com.dailyhome.back.user.presentation.dto.response.UserResponse;
 import com.dailyhome.back.user.service.UserService;
-import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;

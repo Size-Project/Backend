@@ -26,7 +26,7 @@ public class Item {
 
     private int price;
 
-    private int grade;
+    private int reviewRate;
 
     private int reviewCount;
 
@@ -43,7 +43,7 @@ public class Item {
             Store store,
             String name,
             int price,
-            int grade,
+            int reviewRate,
             int reviewCount,
             String content,
             int stockQuantity,
@@ -54,7 +54,7 @@ public class Item {
         this.store = store;
         this.name = name;
         this.price = price;
-        this.grade = grade;
+        this.reviewRate = reviewRate;
         this.reviewCount = reviewCount;
         this.content = content;
         this.stockQuantity = stockQuantity;
@@ -65,7 +65,7 @@ public class Item {
         this.reviewCount++;
     }
 
-    public void calculateGrade() {
+    public void calculateReviewRate() {
 
     }
 }

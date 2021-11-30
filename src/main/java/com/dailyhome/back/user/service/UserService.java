@@ -22,7 +22,7 @@ public class UserService {
     }
 
     public void save(UserSignUpRequest userSignUpRequest) {
-        validateDuplicateEmail(userSignUpRequest.getEmail(), userSignUpRequest.getAccountId());
+        validateDuplicateEmail(userSignUpRequest.getEmail(), userSignUpRequest.getNickname());
 
         String encodePassword = passwordEncoder.encode(userSignUpRequest.getPassword());
         User user = userSignUpRequest.toUser(encodePassword);
@@ -38,8 +38,8 @@ public class UserService {
         return UserResponse.of(user);
     }
 
-    private void validateDuplicateEmail(String email, String accountId) {
-        if (userRepository.existsByEmailOrAccountId(email, accountId)) {
+    private void validateDuplicateEmail(String email, String nickname) {
+        if (userRepository.existsByEmailOrNickname(email, nickname)) {
             throw new DuplicateUserException();
         }
     }

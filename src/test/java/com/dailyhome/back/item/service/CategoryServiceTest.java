@@ -34,9 +34,6 @@ class CategoryServiceTest {
         CategoryResponse categoryRoot = categoryService.createCategoryTree();
 
         //then
-        List<CategoryResponse> subCategories = categoryRoot.getSubCategories();
-        String name = categoryRoot.getSubCategories().get(0).getSubCategories().get(0).getSubCategories().get(0).getName();
-
         Assertions.assertSame(categoryRoot.getSubCategories().size(), 2);
         Assertions.assertSame(categoryRoot.getSubCategories().get(0)
                 .getSubCategories().size(), 2);

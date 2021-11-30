@@ -1,2 +1,4 @@
-package com.dailyhome.back.review.service;public class ReviewService {
+package com.dailyhome.back.review.service;
+
+public class ReviewService {
 }

@@ -18,6 +18,6 @@ public class UserResponse {
     }
 
     public static UserResponse of(User user) {
-        return new UserResponse(user.getEmail(), user.getAccountId());
+        return new UserResponse(user.getEmail(), user.getNickname());
     }
 }

@@ -6,7 +6,6 @@ import com.dailyhome.back.user.presentation.dto.request.UserLoginRequest;
 import com.dailyhome.back.user.presentation.dto.request.UserSignUpRequest;
 import com.dailyhome.back.user.presentation.dto.response.UserResponse;
 import com.dailyhome.back.user.service.UserService;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,7 +63,7 @@ class UserControllerTest extends DocumentationWithSecurity {
                 requestFields(
                         fieldWithPath("email").type(STRING).description("이메일"),
                         fieldWithPath("password").type(STRING).description("비밀번호"),
-                        fieldWithPath("accountId").type(STRING).description("계정아이디")
+                        fieldWithPath("nickname").type(STRING).description("계정아이디")
                 )
         ));
     }
@@ -114,7 +113,7 @@ class UserControllerTest extends DocumentationWithSecurity {
                 ),
                 responseFields(
                         fieldWithPath("email").type(STRING).description("이메일"),
-                        fieldWithPath("accountId").type(STRING).description("계정아이디")
+                        fieldWithPath("nickname").type(STRING).description("계정아이디")
                 )
         ));
     }

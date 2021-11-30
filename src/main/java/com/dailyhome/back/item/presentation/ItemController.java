@@ -17,8 +17,10 @@ public class ItemController {
     private final ItemService itemService;
 
     @GetMapping("")
-    public ResponseEntity<List<ItemResponse>> findAllItems() {
-        List<ItemResponse> itemResponses = itemService.findAll();
+    public ResponseEntity<List<ItemResponse>> findAllItemPages(
+            @RequestParam("from") Long from,
+            @RequestParam("size") int size) {
+        List<ItemResponse> itemResponses = itemService.findItemPagesBy(from, size);
         return ResponseEntity.ok(itemResponses);
     }
 

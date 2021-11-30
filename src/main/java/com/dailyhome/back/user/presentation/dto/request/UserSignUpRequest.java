@@ -12,13 +12,13 @@ public class UserSignUpRequest {
 
     private String password;
 
-    private String accountId;
+    private String nickname;
 
     public User toUser(String encodedPassword) {
         return User.builder()
                 .email(email)
                 .password(encodedPassword)
-                .accountId(accountId)
+                .nickname(nickname)
                 .build();
     }
 }

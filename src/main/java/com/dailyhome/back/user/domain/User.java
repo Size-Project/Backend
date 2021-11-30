@@ -13,7 +13,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String accountId;
+    private String nickname;
 
     private String password;
 
@@ -27,7 +27,7 @@ public class User {
     @Builder
     public User(
             Long id,
-            String accountId,
+            String nickname,
             String password,
             String email,
             String name,
@@ -35,7 +35,7 @@ public class User {
             String providerId
     ) {
         this.id = id;
-        this.accountId = accountId;
+        this.nickname = nickname;
         this.password = password;
         this.email = email;
         this.name = name;

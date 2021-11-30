@@ -54,7 +54,7 @@ public class Oauth2UserPrincipalService extends DefaultOAuth2UserService {
 
     private User registerNewUser(OAuth2UserInfo oAuth2UserInfo) {
         User user = User.builder()
-                .accountId(oAuth2UserInfo.getName())
+                .nickname(oAuth2UserInfo.getName())
                 .email(oAuth2UserInfo.getEmail())
                 .provider(oAuth2UserInfo.getProvider())
                 .providerId(oAuth2UserInfo.getProviderId())
@@ -63,7 +63,7 @@ public class Oauth2UserPrincipalService extends DefaultOAuth2UserService {
     }
 
     private User updateExistingUser(User user, OAuth2UserInfo oAuth2UserInfo) {
-        user.setAccountId(oAuth2UserInfo.getName());
+        user.setNickname(oAuth2UserInfo.getName());
         user.setEmail(oAuth2UserInfo.getEmail());
         return userRepository.save(user);
     }

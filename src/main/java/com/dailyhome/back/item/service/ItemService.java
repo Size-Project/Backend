@@ -5,6 +5,7 @@ import com.dailyhome.back.item.domain.Item;
 import com.dailyhome.back.item.domain.ItemRepository;
 import com.dailyhome.back.item.presentation.dto.response.ItemResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -26,6 +27,15 @@ public class ItemService {
     public ItemResponse findById(Long id) {
         Item item = itemRepository.findById(id).orElseThrow(ItemNotFoundException::new);
         return ItemResponse.of(item);
+    }
+
+    public List<ItemResponse> findItemPagesBy(Long from, int size) {
+        PageRequest pageRequest = PageRequest.of(0, size);
+
+        return itemRepository.findByIdGreaterThanEqualOrderById(from, pageRequest)
+                .stream()
+                .map(ItemResponse::of)
+                .collect(Collectors.toList());
     }
 
 }

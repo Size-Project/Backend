@@ -4,17 +4,11 @@ import com.dailyhome.back.common.DocumentationWithSecurity;
 import com.dailyhome.back.item.domain.Item;
 import com.dailyhome.back.item.presentation.dto.response.ItemResponse;
 import com.dailyhome.back.item.service.ItemService;
-import com.dailyhome.back.user.domain.UserRepository;
-import com.dailyhome.back.user.presentation.dto.response.UserResponse;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.security.test.context.support.WithSecurityContext;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 

@@ -9,15 +9,26 @@ import lombok.*;
 @Builder
 public class ItemResponse {
 
-    private String name;
+    private String storeName;
 
-    private String content;
+    private String name;
 
     private int price;
 
-    private int stockQuantity;
+    private String imageUrl;
+
+    private int reviewRate;
+
+    private int reviewCount;
 
     public static ItemResponse of(Item item) {
-        return new ItemResponse(item.getName(), item.getContent(), item.getPrice(), item.getStockQuantity());
+        return new ItemResponse(
+                item.getStore().getName(),
+                item.getName(),
+                item.getPrice(),
+                item.getImageUrl(),
+                item.getReviewRate(),
+                item.getReviewCount()
+        );
     }
 }
