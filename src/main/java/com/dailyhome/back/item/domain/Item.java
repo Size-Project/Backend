@@ -61,6 +61,17 @@ public class Item {
         this.imageUrl = imageUrl;
     }
 
+    public void subStockQuantityBy(int count) {
+        if (stockQuantity - count < 0) {
+            throw new IllegalArgumentException();
+        }
+        stockQuantity -= count;
+    }
+
+    public void addStockQuantityBy(int count) {
+        stockQuantity += count;
+    }
+
     public void addReviewCount() {
         this.reviewCount++;
     }

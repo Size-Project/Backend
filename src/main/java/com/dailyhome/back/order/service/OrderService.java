@@ -29,13 +29,17 @@ public class OrderService {
         List<OrderItem> orderItems = orderRequest.getOrderItemRequests()
                 .stream()
                 .map(orderItemRequest -> {
+                    int orderCount = orderItemRequest.getCount();
+
                     Item item = itemRepository.findById(orderItemRequest.getItemId())
                             .orElseThrow(ItemNotFoundException::new);
 
+                    item.subStockQuantityBy(orderCount);
+
                     return OrderItem.builder()
                             .item(item)
-                            .count(orderItemRequest.getCount())
-                            .orderPrice(item.getPrice() * orderItemRequest.getCount())
+                            .count(orderCount)
+                            .orderPrice(item.getPrice() * orderCount)
                             .build();
                 })
                 .collect(Collectors.toList());
