@@ -10,8 +10,11 @@ import java.util.List;
 @Getter
 public class CategoryResponse {
     private Long id;
+
     private String name;
+
     private Long parentId;
+
     private List<CategoryResponse> subCategories;
 
     public CategoryResponse(Long id, String name, Long parentId) {

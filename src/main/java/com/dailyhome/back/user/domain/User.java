@@ -13,13 +13,11 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String email;
+
     private String nickname;
 
     private String password;
-
-    private String email;
-
-    private String name;
 
     private String provider;
     private String providerId;
@@ -30,7 +28,6 @@ public class User {
             String nickname,
             String password,
             String email,
-            String name,
             String provider,
             String providerId
     ) {
@@ -38,7 +35,6 @@ public class User {
         this.nickname = nickname;
         this.password = password;
         this.email = email;
-        this.name = name;
         this.provider = provider;
         this.providerId = providerId;
     }

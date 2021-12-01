@@ -4,7 +4,7 @@ import com.dailyhome.back.item.domain.Item;
 import lombok.*;
 
 @Getter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Builder
 public class ItemResponse {

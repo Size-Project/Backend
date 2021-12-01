@@ -14,6 +14,8 @@ public class ItemDetailResponse {
 
     private String content;
 
+    private String imageUrl;
+
     private int price;
 
     private int stockQuantity;
@@ -23,6 +25,7 @@ public class ItemDetailResponse {
                 item.getStore().getName(),
                 item.getName(),
                 item.getContent(),
+                item.getImageUrl(),
                 item.getPrice(),
                 item.getStockQuantity()
         );

@@ -47,7 +47,7 @@ class UserControllerTest extends DocumentationWithSecurity {
     void registerUser() throws Exception {
         //given
         UserSignUpRequest userSignUpRequest = new UserSignUpRequest(
-                "이메일@이메일.com", "비밀번호", "계정이름");
+                "이메일@이메일.com", "비밀번호", "닉네임");
 
         //when
         ResultActions perform = mockMvc.perform(post("/api/users")
@@ -63,7 +63,7 @@ class UserControllerTest extends DocumentationWithSecurity {
                 requestFields(
                         fieldWithPath("email").type(STRING).description("이메일"),
                         fieldWithPath("password").type(STRING).description("비밀번호"),
-                        fieldWithPath("nickname").type(STRING).description("계정아이디")
+                        fieldWithPath("nickname").type(STRING).description("닉네임")
                 )
         ));
     }
@@ -91,8 +91,7 @@ class UserControllerTest extends DocumentationWithSecurity {
                 .id(1L)
                 .email("이메일@이메일.com")
                 .password("abcd1234")
-                .accountId("계정이름")
-                .name("이름")
+                .nickname("닉네임")
                 .build();
 
         UserResponse userResponse = UserResponse.of(user);
@@ -100,7 +99,7 @@ class UserControllerTest extends DocumentationWithSecurity {
 
         //when
         ResultActions perform = mockMvc.perform(get("/api/users/{id}", 1L)
-                .header("authorization", "Bearer Token"));
+                .header("Authorization", "Bearer Token"));
 
         //then
 
@@ -113,7 +112,7 @@ class UserControllerTest extends DocumentationWithSecurity {
                 ),
                 responseFields(
                         fieldWithPath("email").type(STRING).description("이메일"),
-                        fieldWithPath("nickname").type(STRING).description("계정아이디")
+                        fieldWithPath("nickname").type(STRING).description("닉네임")
                 )
         ));
     }

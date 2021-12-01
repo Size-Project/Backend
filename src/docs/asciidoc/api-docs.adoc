@@ -1,16 +1,16 @@
-ifndef::snippets[]
+Undef::snippets[]
 :snippets: ./build/generated-snippets
 endif::[]
 
-include::{snippets}/item/all/http-request.adoc[]
-include::{snippets}/item/all/response-body.adoc[]
+include::{snippets}/item/all/http-request.adhoc[]
+include::{snippets}/item/all/response-body.adhoc[]
 
-include::{snippets}/item/info/http-request.adoc[]
-include::{snippets}/item/info/response-body.adoc[]
+include::{snippets}/item/info/http-request.adhoc[]
+include::{snippets}/item/info/response-body.adhoc[]
 
-include::{snippets}/user/signup/http-request.adoc[]
-include::{snippets}/user/signup/request-body.adoc[]
+include::{snippets}/user/signup/http-request.adhoc[]
+include::{snippets}/user/signup/request-body.adhoc[]
 
-include::{snippets}/user/info/http-request.adoc[]
-include::{snippets}/user/info/request-headers.adoc[]
-include::{snippets}/user/info/response-body.adoc[]
+include::{snippets}/user/info/http-request.adhoc[]
+include::{snippets}/user/info/request-headers.adhoc[]
+include::{snippets}/user/info/response-body.adhoc[]

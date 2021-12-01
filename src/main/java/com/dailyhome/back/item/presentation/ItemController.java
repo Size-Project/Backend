@@ -1,5 +1,6 @@
 package com.dailyhome.back.item.presentation;
 
+import com.dailyhome.back.item.presentation.dto.response.ItemDetailResponse;
 import com.dailyhome.back.item.presentation.dto.response.ItemResponse;
 import com.dailyhome.back.item.service.ItemService;
 import lombok.RequiredArgsConstructor;
@@ -25,8 +26,8 @@ public class ItemController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ItemResponse> findItemById(@PathVariable("id") Long itemId) {
-        ItemResponse itemResponse = itemService.findById(itemId);
-        return ResponseEntity.ok(itemResponse);
+    public ResponseEntity<ItemDetailResponse> findItemById(@PathVariable("id") Long itemId) {
+        ItemDetailResponse itemDetailResponse = itemService.findById(itemId);
+        return ResponseEntity.ok(itemDetailResponse);
     }
 }

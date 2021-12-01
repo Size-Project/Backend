@@ -3,6 +3,7 @@ package com.dailyhome.back.item.service;
 import com.dailyhome.back.exception.item.ItemNotFoundException;
 import com.dailyhome.back.item.domain.Item;
 import com.dailyhome.back.item.domain.ItemRepository;
+import com.dailyhome.back.item.presentation.dto.response.ItemDetailResponse;
 import com.dailyhome.back.item.presentation.dto.response.ItemResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
@@ -24,9 +25,9 @@ public class ItemService {
                 .collect(Collectors.toList());
     }
 
-    public ItemResponse findById(Long id) {
+    public ItemDetailResponse findById(Long id) {
         Item item = itemRepository.findById(id).orElseThrow(ItemNotFoundException::new);
-        return ItemResponse.of(item);
+        return ItemDetailResponse.of(item);
     }
 
     public List<ItemResponse> findItemPagesBy(Long from, int size) {

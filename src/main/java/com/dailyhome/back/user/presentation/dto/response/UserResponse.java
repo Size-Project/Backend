@@ -10,11 +10,11 @@ import lombok.NoArgsConstructor;
 public class UserResponse {
     private String email;
 
-    private String accountId;
+    private String nickname;
 
-    public UserResponse(String email, String accountId) {
+    public UserResponse(String email, String nickname) {
         this.email = email;
-        this.accountId = accountId;
+        this.nickname = nickname;
     }
 
     public static UserResponse of(User user) {
