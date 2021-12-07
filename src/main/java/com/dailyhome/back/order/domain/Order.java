@@ -24,8 +24,8 @@ public class Order {
     @JoinColumn(name = "user_id")
     private User orderer;
 
-    @OneToMany
-    @JoinColumn(name = "order_item_id")
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "order_id")
     private List<OrderItem> orderItems;
 
     @CreatedDate

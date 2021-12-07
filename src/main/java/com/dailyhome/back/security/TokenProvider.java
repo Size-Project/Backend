@@ -45,20 +45,19 @@ public class TokenProvider {
 
     public boolean isValidateToken(String authToken) {
         try {
-            log.info("validate JWT Token");
+            log.info("토큰 유효성 검사를 한다.");
             Jwts.parser().setSigningKey(base64Secret).parseClaimsJws(authToken);
             return true;
         } catch (SecurityException | MalformedJwtException e) {
-            log.info("Invalid JWT signature.");
+            log.info("유효하지 않은 토큰입니다.");
             log.trace(e.getMessage());
         } catch (ExpiredJwtException e) {
-            log.info("Expired JWT token.");
+            log.info("만료된 토큰입니다.");
             log.trace(e.getMessage());
         } catch (UnsupportedJwtException e) {
-            log.info("Unsupported JWT token.");
+            log.info("지원하지 않는 방식의 토큰입니다.");
             log.trace(e.getMessage());
         } catch (IllegalArgumentException e) {
-            log.info("JWT token compact of handler are invalid.");
             log.trace(e.getMessage());
         }
         return false;

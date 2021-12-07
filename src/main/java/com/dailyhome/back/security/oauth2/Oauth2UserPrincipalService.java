@@ -24,7 +24,6 @@ public class Oauth2UserPrincipalService extends DefaultOAuth2UserService {
 
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
-        System.out.println("Oauth2UserPrincipalService.loadUser");
         OAuth2User oAuth2User = super.loadUser(userRequest);
         return processOAuth2User(userRequest, oAuth2User);
     }
@@ -42,20 +41,17 @@ public class Oauth2UserPrincipalService extends DefaultOAuth2UserService {
 
         Optional<User> optionalUser = userRepository.findByProviderAndProviderId(provider, providerId);
 
-        User user;
-        if (optionalUser.isPresent()) {
-            user = updateExistingUser(optionalUser.get(), oAuth2UserInfo);
-        } else {
-            user = registerNewUser(oAuth2UserInfo);
-        }
+        User user = optionalUser
+                .map(value -> updateExistingUser(value, oAuth2UserInfo))
+                .orElseGet(() -> registerNewUser(oAuth2UserInfo));
 
         return new UserPrincipal(user, oAuth2User.getAttributes());
     }
 
     private User registerNewUser(OAuth2UserInfo oAuth2UserInfo) {
         User user = User.builder()
-                .nickname(oAuth2UserInfo.getName())
                 .email(oAuth2UserInfo.getEmail())
+                .nickname(oAuth2UserInfo.getName())
                 .provider(oAuth2UserInfo.getProvider())
                 .providerId(oAuth2UserInfo.getProviderId())
                 .build();
