@@ -1,6 +1,7 @@
 package com.dailyhome.back.user.service;
 
-import com.dailyhome.back.exception.user.DuplicateUserException;
+import com.dailyhome.back.exception.user.DuplicateUserEmailException;
+import com.dailyhome.back.exception.user.DuplicateUserNicknameException;
 import com.dailyhome.back.exception.user.UserNotFoundException;
 import com.dailyhome.back.user.domain.User;
 import com.dailyhome.back.user.domain.UserRepository;
@@ -22,7 +23,7 @@ public class UserService {
     }
 
     public void save(UserSignUpRequest userSignUpRequest) {
-        validateDuplicateEmail(userSignUpRequest.getEmail(), userSignUpRequest.getNickname());
+        validateDuplicateEmailAndNickname(userSignUpRequest.getEmail(), userSignUpRequest.getNickname());
 
         String encodePassword = passwordEncoder.encode(userSignUpRequest.getPassword());
         User user = userSignUpRequest.toUser(encodePassword);
@@ -38,9 +39,13 @@ public class UserService {
         return UserResponse.of(user);
     }
 
-    private void validateDuplicateEmail(String email, String nickname) {
-        if (userRepository.existsByEmailOrNickname(email, nickname)) {
-            throw new DuplicateUserException();
+    private void validateDuplicateEmailAndNickname(String email, String nickname) {
+        if (userRepository.existsByEmail(email)) {
+            throw new DuplicateUserEmailException();
+        }
+
+        if (userRepository.existsByNickname(nickname)) {
+            throw new DuplicateUserNicknameException();
         }
     }
 }

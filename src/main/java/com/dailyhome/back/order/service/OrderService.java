@@ -26,7 +26,8 @@ public class OrderService {
 
     @Transactional
     public void save(OrderRequest orderRequest, User user) {
-        List<OrderItem> orderItems = orderRequest.getOrderItemRequests()
+        List<OrderItem> orderItems = orderRequest
+                .getOrderItemRequests()
                 .stream()
                 .map(orderItemRequest -> {
                     int orderCount = orderItemRequest.getCount();
