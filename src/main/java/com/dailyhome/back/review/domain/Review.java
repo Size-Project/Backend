@@ -2,9 +2,14 @@ package com.dailyhome.back.review.domain;
 
 import com.dailyhome.back.item.domain.Item;
 import com.dailyhome.back.user.domain.User;
+import lombok.*;
 
 import javax.persistence.*;
 
+@Getter
+@Builder
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
 @Entity
 public class Review {
     @Id
@@ -22,6 +27,6 @@ public class Review {
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "post_id")
+    @JoinColumn(name = "item_id")
     private Item item;
 }
