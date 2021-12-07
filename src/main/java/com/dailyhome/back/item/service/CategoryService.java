@@ -2,9 +2,13 @@ package com.dailyhome.back.item.service;
 
 import com.dailyhome.back.item.domain.Category;
 import com.dailyhome.back.item.domain.CategoryRepository;
+import com.dailyhome.back.item.domain.ItemRepository;
 import com.dailyhome.back.item.presentation.dto.response.CategoryResponse;
+import com.dailyhome.back.item.presentation.dto.response.ItemResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
@@ -17,7 +21,9 @@ import static java.util.stream.Collectors.groupingBy;
 public class CategoryService {
 
     private final CategoryRepository categoryRepository;
+    private final ItemRepository itemRepository;
 
+    @Transactional
     public CategoryResponse createCategoryTree() {
         Map<Long, List<CategoryResponse>> groupingByParent = categoryRepository.findAll()
                 .stream()
@@ -44,4 +50,11 @@ public class CategoryService {
         subCategories.forEach(s -> addSubCategories(s, groupingByParent));
     }
 
+    @Transactional
+    public List<ItemResponse> findAllByCategoryId(Long id, Long from, int size) {
+        return itemRepository.findAllByCategoryId(id)
+                .stream()
+                .map(ItemResponse::of)
+                .collect(Collectors.toList());
+    }
 }
