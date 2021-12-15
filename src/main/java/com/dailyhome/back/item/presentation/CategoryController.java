@@ -23,10 +23,16 @@ public class CategoryController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<List<ItemResponse>> find(@PathVariable("id") Long id,
-                                                   @RequestParam("from") Long from,
-                                                 @RequestParam("size") int size) {
-        List<ItemResponse> itemResponses = categoryService.findAllByCategoryId(id, from, size);
+    public ResponseEntity<List<ItemResponse>> find(@PathVariable("id") Long id) {
+        List<ItemResponse> itemResponses = categoryService.findAllByCategoryId(id);
         return ResponseEntity.ok(itemResponses);
     }
+
+//    @GetMapping("/{id}")
+//    public ResponseEntity<List<ItemResponse>> find(@PathVariable("id") Long id,
+//                                                   @RequestParam("from") Long from,
+//                                                 @RequestParam("size") int size) {
+//        List<ItemResponse> itemResponses = categoryService.findAllByCategoryId(id, from, size);
+//        return ResponseEntity.ok(itemResponses);
+//    }
 }

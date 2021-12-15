@@ -1,5 +1,6 @@
 package com.dailyhome.back.review.presentation;
 
+import com.dailyhome.back.common.AuthConverter;
 import com.dailyhome.back.review.presentation.dto.request.ReviewSaveRequest;
 import com.dailyhome.back.review.presentation.dto.response.ReviewResponse;
 import com.dailyhome.back.review.service.ReviewService;
@@ -24,8 +25,7 @@ public class ReviewController {
     @PostMapping("")
     public ResponseEntity<?> saveReview(@RequestBody ReviewSaveRequest reviewSaveRequest,
                                         Authentication authentication) {
-        UserPrincipal principal = (UserPrincipal) authentication.getPrincipal();
-        User user = principal.getUser();
+        User user = AuthConverter.findUserFromAuthentication(authentication);
         reviewService.save(reviewSaveRequest, user);
         return ResponseEntity.ok("success");
     }

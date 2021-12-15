@@ -10,8 +10,10 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.groupingBy;
@@ -51,7 +53,23 @@ public class CategoryService {
     }
 
     @Transactional
-    public List<ItemResponse> findAllByCategoryId(Long id, Long from, int size) {
+    public List<ItemResponse> findAllByCategoryId(Long id) {
+        Category category = categoryRepository.findById(id).orElseThrow(IllegalArgumentException::new);
+
+        if (category.getParentId() == 0) { // 최상위 카테고리일 경우
+            List<Category> categories = categoryRepository.findAllByParentId(category.getId());
+
+            List<ItemResponse> itemResponses = new ArrayList<>();
+            for (Category c : categories) {
+                itemRepository.findAllByCategoryId(c.getId())
+                        .stream()
+                        .map(ItemResponse::of)
+                        .forEach(itemResponses::add);
+            }
+
+            return itemResponses;
+        }
+
         return itemRepository.findAllByCategoryId(id)
                 .stream()
                 .map(ItemResponse::of)

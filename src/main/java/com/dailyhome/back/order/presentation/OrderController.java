@@ -1,5 +1,6 @@
 package com.dailyhome.back.order.presentation;
 
+import com.dailyhome.back.common.AuthConverter;
 import com.dailyhome.back.order.presentation.dto.request.OrderRequest;
 import com.dailyhome.back.order.service.OrderService;
 import com.dailyhome.back.security.UserPrincipal;
@@ -19,8 +20,7 @@ public class OrderController {
 
     @PostMapping("")
     public ResponseEntity<?> orderItem(@RequestBody OrderRequest orderRequest, Authentication authentication) {
-        UserPrincipal principal = (UserPrincipal) authentication.getPrincipal();
-        User user = principal.getUser();
+        User user = AuthConverter.findUserFromAuthentication(authentication);
         orderService.save(orderRequest, user);
         return ResponseEntity.ok("success");
     }

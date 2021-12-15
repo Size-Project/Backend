@@ -31,14 +31,6 @@ public class UserService {
         userRepository.save(user);
     }
 
-    @Transactional(readOnly = true)
-    public UserResponse findById(Long id) {
-        User user = userRepository.findById(id)
-                .orElseThrow(UserNotFoundException::new);
-
-        return UserResponse.of(user);
-    }
-
     private void validateDuplicateEmailAndNickname(String email, String nickname) {
         if (userRepository.existsByEmail(email)) {
             throw new DuplicateUserEmailException();
@@ -47,5 +39,13 @@ public class UserService {
         if (userRepository.existsByNickname(nickname)) {
             throw new DuplicateUserNicknameException();
         }
+    }
+
+    @Transactional(readOnly = true)
+    public UserResponse findCurrentUser(User user) {
+        User currentUser = userRepository.findById(user.getId())
+                .orElseThrow(UserNotFoundException::new);
+
+        return UserResponse.of(currentUser);
     }
 }

@@ -8,6 +8,7 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 public class ItemResponse {
+    private Long id;
 
     private String storeName;
 
@@ -23,6 +24,7 @@ public class ItemResponse {
 
     public static ItemResponse of(Item item) {
         return new ItemResponse(
+                item.getId(),
                 item.getStore().getName(),
                 item.getName(),
                 item.getPrice(),

@@ -65,10 +65,11 @@ class ItemControllerTest extends DocumentationWithSecurity {
         //then
 
         //documentation
-        perform.andDo(document("item/info",
+        perform.andDo(document("item-info",
                 preprocessRequest(prettyPrint()),
                 preprocessResponse(prettyPrint()),
                 responseFields(
+                        fieldWithPath("id").type(NUMBER).description("상품 pk"),
                         fieldWithPath("storeName").type(STRING).description("브랜드 이름"),
                         fieldWithPath("name").type(STRING).description("상품 이름"),
                         fieldWithPath("content").type(STRING).description("상품 설명"),
@@ -91,6 +92,7 @@ class ItemControllerTest extends DocumentationWithSecurity {
         List<ItemResponse> itemResponseList = new ArrayList<>();
         for (int i = 0; i < 8; i++) {
             Item item = Item.builder()
+                    .id((long) i)
                     .store(store)
                     .name("상품이름" + i)
                     .content("상품내용" + i)
@@ -112,10 +114,11 @@ class ItemControllerTest extends DocumentationWithSecurity {
         //then
 
         //documentation
-        perform.andDo(document("item/all",
+        perform.andDo(document("item-all-scroll",
                 preprocessRequest(prettyPrint()),
                 preprocessResponse(prettyPrint()),
                 responseFields(
+                        fieldWithPath("[].id").type(NUMBER).description("상품 pk"),
                         fieldWithPath("[].storeName").type(STRING).description("브랜드 이름"),
                         fieldWithPath("[].name").type(STRING).description("상품 이름"),
                         fieldWithPath("[].price").type(NUMBER).description("상품 가격"),
