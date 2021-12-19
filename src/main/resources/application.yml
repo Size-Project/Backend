@@ -6,3 +6,6 @@ spring:
     include:
       - dev
       - auth
+
+lombok:
+  addLombokGeneratedAnnotation: true

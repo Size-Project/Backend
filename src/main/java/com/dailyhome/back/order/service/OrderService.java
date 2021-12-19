@@ -7,6 +7,7 @@ import com.dailyhome.back.order.domain.Order;
 import com.dailyhome.back.order.domain.OrderItem;
 import com.dailyhome.back.order.domain.OrderRepository;
 import com.dailyhome.back.order.domain.OrderStatus;
+import com.dailyhome.back.order.presentation.dto.request.OrderItemRequest;
 import com.dailyhome.back.order.presentation.dto.request.OrderRequest;
 import com.dailyhome.back.user.domain.User;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -25,16 +27,28 @@ public class OrderService {
     private final ItemRepository itemRepository;
 
     @Transactional
-    public void save(OrderRequest orderRequest, User user) {
-        List<OrderItem> orderItems = orderRequest
+    public Order save(OrderRequest orderRequest, User user) {
+        List<OrderItem> orderItems = getOrderItemsFromOrderRequest(orderRequest);
+
+        Order order = Order.builder()
+                .orderer(user)
+                .orderItems(orderItems)
+                .status(OrderStatus.ORDERED)
+                .orderedAt(LocalDateTime.now())
+                .build();
+
+        return orderRepository.save(order);
+    }
+
+    private List<OrderItem> getOrderItemsFromOrderRequest(OrderRequest orderRequest) {
+        return orderRequest
                 .getOrderItemRequests()
                 .stream()
                 .map(orderItemRequest -> {
-                    int orderCount = orderItemRequest.getCount();
-
                     Item item = itemRepository.findById(orderItemRequest.getItemId())
                             .orElseThrow(ItemNotFoundException::new);
 
+                    int orderCount = orderItemRequest.getCount();
                     item.subStockQuantityBy(orderCount);
 
                     return OrderItem.builder()
@@ -44,14 +58,5 @@ public class OrderService {
                             .build();
                 })
                 .collect(Collectors.toList());
-
-        Order order = Order.builder()
-                .orderer(user)
-                .orderedAt(LocalDateTime.now())
-                .orderItems(orderItems)
-                .status(OrderStatus.ORDERED)
-                .build();
-
-        orderRepository.save(order);
     }
 }

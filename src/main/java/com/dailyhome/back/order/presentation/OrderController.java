@@ -8,6 +8,7 @@ import com.dailyhome.back.user.domain.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin(value = "*")
@@ -19,9 +20,9 @@ public class OrderController {
     private final OrderService orderService;
 
     @PostMapping("")
-    public ResponseEntity<?> orderItem(@RequestBody OrderRequest orderRequest, Authentication authentication) {
-        User user = AuthConverter.findUserFromAuthentication(authentication);
-        orderService.save(orderRequest, user);
+    public ResponseEntity<?> orderItem(@RequestBody OrderRequest orderRequest,
+                                       @AuthenticationPrincipal UserPrincipal userPrincipal) {
+        orderService.save(orderRequest, userPrincipal.getUser());
         return ResponseEntity.ok("success");
     }
 

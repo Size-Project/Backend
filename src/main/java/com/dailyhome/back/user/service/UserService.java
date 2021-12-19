@@ -22,13 +22,13 @@ public class UserService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public void save(UserSignUpRequest userSignUpRequest) {
+    public User save(UserSignUpRequest userSignUpRequest) {
         validateDuplicateEmailAndNickname(userSignUpRequest.getEmail(), userSignUpRequest.getNickname());
 
         String encodePassword = passwordEncoder.encode(userSignUpRequest.getPassword());
         User user = userSignUpRequest.toUser(encodePassword);
 
-        userRepository.save(user);
+        return userRepository.save(user);
     }
 
     private void validateDuplicateEmailAndNickname(String email, String nickname) {

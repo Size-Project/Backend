@@ -1,11 +1,15 @@
-package com.dailyhome.back.item.presentation;
+package com.dailyhome.back.unit.item.presentation;
 
 import com.dailyhome.back.common.DocumentationWithSecurity;
+import com.dailyhome.back.common.factory.ItemFactory;
 import com.dailyhome.back.item.domain.Item;
 import com.dailyhome.back.item.domain.store.Store;
+import com.dailyhome.back.item.presentation.ItemController;
 import com.dailyhome.back.item.presentation.dto.response.ItemDetailResponse;
 import com.dailyhome.back.item.presentation.dto.response.ItemResponse;
 import com.dailyhome.back.item.service.ItemService;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
@@ -17,6 +21,7 @@ import org.springframework.test.web.servlet.ResultActions;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
@@ -25,6 +30,8 @@ import static org.springframework.restdocs.payload.JsonFieldType.NUMBER;
 import static org.springframework.restdocs.payload.JsonFieldType.STRING;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest({
     ItemController.class,
@@ -37,34 +44,30 @@ class ItemControllerTest extends DocumentationWithSecurity {
     @Autowired
     private MockMvc mockMvc;
 
+    private final ObjectMapper objectMapper = new ObjectMapper();
+
+    @DisplayName("단일 상품을 조회한다.")
     @Test
     public void findById() throws Exception {
         //given
-        Store store = Store.builder()
-                .name("리샘")
-                .reviewCount(0)
-                .reviewRate(0)
-                .build();
-
-        Item item = Item.builder()
-                .id(1L)
-                .store(store)
-                .name("상품이름")
-                .content("상품내용")
-                .price(30000)
-                .imageUrl("image_url")
-                .stockQuantity(10000)
-                .build();
+        Long id = 1L;
+        Item item = ItemFactory.createItem(id);
 
         ItemDetailResponse itemDetailResponse = ItemDetailResponse.of(item);
-        given(itemService.findById(1L)).willReturn(itemDetailResponse);
+        given(itemService.findById(id)).willReturn(itemDetailResponse);
 
         //when
-        ResultActions perform = mockMvc.perform(get("/api/items/{id}", 1L));
+        ResultActions perform = mockMvc.perform(get("/api/items/{id}", id));
 
         //then
+        String body = perform.andExpect(status().isOk())
+                .andReturn()
+                .getResponse()
+                .getContentAsString();
 
-        //documentation
+        assertThat(body).isEqualTo(objectMapper.writeValueAsString(itemDetailResponse));
+
+        //docs
         perform.andDo(document("item-info",
                 preprocessRequest(prettyPrint()),
                 preprocessResponse(prettyPrint()),
@@ -80,40 +83,26 @@ class ItemControllerTest extends DocumentationWithSecurity {
         ));
     }
 
+    @DisplayName("모든 상품을 조회한다.")
     @Test
     public void findAll() throws Exception {
         //given
-        Store store = Store.builder()
-                .name("리샘")
-                .reviewCount(0)
-                .reviewRate(0)
-                .build();
-
-        List<ItemResponse> itemResponseList = new ArrayList<>();
-        for (int i = 0; i < 8; i++) {
-            Item item = Item.builder()
-                    .id((long) i)
-                    .store(store)
-                    .name("상품이름" + i)
-                    .content("상품내용" + i)
-                    .price(10000 * i)
-                    .stockQuantity(100 * i)
-                    .imageUrl("이미지경로" + i)
-                    .reviewRate(i)
-                    .reviewCount(i)
-                    .build();
-
-            itemResponseList.add(ItemResponse.of(item));
-        }
-
-        given(itemService.findItemPagesBy(1L, 8)).willReturn(itemResponseList);
+        long from = 1; int size = 8;
+        List<ItemResponse> itemResponseList = ItemFactory.createItemResponses();
+        given(itemService.findItemPagesBy(from, size)).willReturn(itemResponseList);
 
         //when
-        ResultActions perform = mockMvc.perform(get("/api/items?from=1&size=8"));
+        ResultActions perform = mockMvc.perform(get("/api/items?from={from}&size={size}", from, size));
 
         //then
+        String body = perform.andExpect(status().isOk())
+                .andReturn()
+                .getResponse()
+                .getContentAsString();
 
-        //documentation
+        assertThat(body).isEqualTo(objectMapper.writeValueAsString(itemResponseList));
+
+        //docs
         perform.andDo(document("item-all-scroll",
                 preprocessRequest(prettyPrint()),
                 preprocessResponse(prettyPrint()),
@@ -127,6 +116,6 @@ class ItemControllerTest extends DocumentationWithSecurity {
                         fieldWithPath("[].reviewCount").type(NUMBER).description("총 리뷰 개수")
                 ))
         );
-
     }
+
 }

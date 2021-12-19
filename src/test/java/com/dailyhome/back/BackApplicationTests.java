@@ -3,11 +3,11 @@ package com.dailyhome.back;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
-class BackApplicationTests {
-
-    @Test
-    void contextLoads() {
-    }
-
-}
+//@SpringBootTest
+//class BackApplicationTests {
+//
+////    @Test
+////    void contextLoads() {
+////    }
+//
+//}

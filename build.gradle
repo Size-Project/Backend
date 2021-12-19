@@ -43,15 +43,20 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.boot:spring-boot-starter-web'
-//    implementation 'org.flywaydb:flyway-core'
-    compileOnly 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
+
+//    implementation 'org.flywaydb:flyway-core'
     runtimeOnly 'com.h2database:h2'
     runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
+
+    compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
+
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
+    testImplementation 'io.rest-assured:rest-assured:4.4.0'
     testImplementation 'org.springframework.security:spring-security-test'
+
     implementation 'io.jsonwebtoken:jjwt:0.9.1'
 }
 
@@ -66,11 +71,25 @@ jacocoTestReport {
     reports {
         html.enabled true
         xml.enabled true
-        csv.enabled true
+        csv.enabled false
 
         html.destination file("src/jacoco/jacoco.html")
         xml.destination file("src/jacoco/jacoco.xml")
     }
+
+    afterEvaluate {
+        classDirectories.setFrom(files(classDirectories.files.collect {
+            fileTree(dir: it,
+                    exclude: [
+                            '/com/dailyhome/back/*BackApplication*',
+                            '/com/dailyhome/back/exception',
+                            '/com/dailyhome/back/common',
+                            '/com/dailyhome/back/configuration',
+                            '/com/dailyhome/back/**/dto',
+                    ])
+        }))
+    }
+
     finalizedBy 'jacocoTestCoverageVerification'
 }
 
@@ -91,6 +110,14 @@ jacocoTestCoverageVerification {
                 value = 'COVEREDRATIO'
                 minimum = 0.00
             }
+
+            excludes = [
+                    '/com/dailyhome/back/*BackApplication*',
+                    '/com/dailyhome/back/exception',
+                    '/com/dailyhome/back/common',
+                    '/com/dailyhome/back/configuration',
+                    '/com/dailyhome/back/**/dto'
+            ]
         }
     }
 }

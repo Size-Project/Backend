@@ -1,5 +1,6 @@
 package com.dailyhome.back.item.domain;
 
+import com.dailyhome.back.exception.item.ItemNotEnoughStockQuantityException;
 import com.dailyhome.back.item.domain.store.Store;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -63,7 +64,7 @@ public class Item {
 
     public void subStockQuantityBy(int count) {
         if (stockQuantity - count < 0) {
-            throw new IllegalArgumentException();
+            throw new ItemNotEnoughStockQuantityException();
         }
         stockQuantity -= count;
     }
