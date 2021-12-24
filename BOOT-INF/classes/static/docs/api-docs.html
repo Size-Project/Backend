@@ -469,19 +469,16 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_유저_회원가입_요청_이메일_중복">유저 회원가입 요청 - 이메일 중복</a>
 <ul class="sectlevel3">
 <li><a href="#_request_4">Request</a></li>
-<li><a href="#_response_4">Response</a></li>
 </ul>
 </li>
 <li><a href="#_유저_회원가입_요청_닉네임_중복">유저 회원가입 요청 - 닉네임 중복</a>
 <ul class="sectlevel3">
 <li><a href="#_request_5">Request</a></li>
-<li><a href="#_response_5">Response</a></li>
 </ul>
 </li>
 <li><a href="#_유저_조회">유저 조회</a>
 <ul class="sectlevel3">
 <li><a href="#_request_6">Request</a></li>
-<li><a href="#_response_6">Response</a></li>
 </ul>
 </li>
 </ul>
@@ -512,7 +509,7 @@ Host: localhost:8080</code></pre>
 Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
-Content-Type: application/json
+Content-Type: application/json;charset=UTF-8
 X-Content-Type-Options: nosniff
 X-XSS-Protection: 1; mode=block
 Cache-Control: no-cache, no-store, max-age=0, must-revalidate
@@ -608,13 +605,13 @@ Host: localhost:8080</code></pre>
 Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
-Content-Type: application/json
+Content-Type: application/json;charset=UTF-8
 X-Content-Type-Options: nosniff
 X-XSS-Protection: 1; mode=block
 Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
-Content-Length: 171
+Content-Length: 169
 
 {
   "id" : 1,
@@ -623,7 +620,7 @@ Content-Length: 171
   "content" : "상품내용",
   "imageUrl" : "image_url",
   "price" : 30000,
-  "stockQuantity" : 10000
+  "stockQuantity" : 100
 }</code></pre>
 </div>
 </div>
@@ -661,7 +658,7 @@ Host: localhost:8080
 Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
-Content-Type: application/json
+Content-Type: application/json;charset=UTF-8
 X-Content-Type-Options: nosniff
 X-XSS-Protection: 1; mode=block
 Cache-Control: no-cache, no-store, max-age=0, must-revalidate
@@ -682,43 +679,10 @@ Content-Length: 101
 <h3 id="_유저_회원가입_요청_이메일_중복">유저 회원가입 요청 - 이메일 중복</h3>
 <div class="sect3">
 <h4 id="_request_4">Request</h4>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /api/users HTTP/1.1
-Content-Type: application/json;charset=UTF-8
-Content-Length: 100
-Host: localhost:8080
-
-{
-  "email" : "이메일@이메일.com",
-  "password" : "비밀번호",
-  "nickname" : "닉네임"
-}</code></pre>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_response_4">Response</h4>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
-Vary: Origin
-Vary: Access-Control-Request-Method
-Vary: Access-Control-Request-Headers
-Content-Type: application/json
-X-Content-Type-Options: nosniff
-X-XSS-Protection: 1; mode=block
-Cache-Control: no-cache, no-store, max-age=0, must-revalidate
-Pragma: no-cache
-Expires: 0
-Content-Length: 101
-
-{
-  "status" : "200 OK",
-  "errorCode" : "",
-  "message" : "성공적으로 응답하였습니다."
-}</code></pre>
-</div>
+<div class="paragraph">
+<p>Unresolved directive in api-docs.adoc - include::./build/generated-snippets/user-signup-duplicatedEmail/http-request.adoc[]
+==== Response
+Unresolved directive in api-docs.adoc - include::./build/generated-snippets/user-signup-duplicatedEmail/http-response.adoc[]</p>
 </div>
 </div>
 </div>
@@ -726,43 +690,10 @@ Content-Length: 101
 <h3 id="_유저_회원가입_요청_닉네임_중복">유저 회원가입 요청 - 닉네임 중복</h3>
 <div class="sect3">
 <h4 id="_request_5">Request</h4>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /api/users HTTP/1.1
-Content-Type: application/json;charset=UTF-8
-Content-Length: 100
-Host: localhost:8080
-
-{
-  "email" : "이메일@이메일.com",
-  "password" : "비밀번호",
-  "nickname" : "닉네임"
-}</code></pre>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_response_5">Response</h4>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
-Vary: Origin
-Vary: Access-Control-Request-Method
-Vary: Access-Control-Request-Headers
-Content-Type: application/json
-X-Content-Type-Options: nosniff
-X-XSS-Protection: 1; mode=block
-Cache-Control: no-cache, no-store, max-age=0, must-revalidate
-Pragma: no-cache
-Expires: 0
-Content-Length: 101
-
-{
-  "status" : "200 OK",
-  "errorCode" : "",
-  "message" : "성공적으로 응답하였습니다."
-}</code></pre>
-</div>
+<div class="paragraph">
+<p>Unresolved directive in api-docs.adoc - include::./build/generated-snippets/user-signup-duplicatedNickname/http-request.adoc[]
+==== Response
+Unresolved directive in api-docs.adoc - include::./build/generated-snippets/user-signup-duplicatedNickname/http-response.adoc[]</p>
 </div>
 </div>
 </div>
@@ -770,35 +701,10 @@ Content-Length: 101
 <h3 id="_유저_조회">유저 조회</h3>
 <div class="sect3">
 <h4 id="_request_6">Request</h4>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /api/users/1 HTTP/1.1
-Authorization: Bearer Token
-Host: localhost:8080</code></pre>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_response_6">Response</h4>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
-Vary: Origin
-Vary: Access-Control-Request-Method
-Vary: Access-Control-Request-Headers
-Content-Type: application/json
-X-Content-Type-Options: nosniff
-X-XSS-Protection: 1; mode=block
-Cache-Control: no-cache, no-store, max-age=0, must-revalidate
-Pragma: no-cache
-Expires: 0
-Content-Length: 69
-
-{
-  "email" : "이메일@이메일.com",
-  "nickname" : "닉네임"
-}</code></pre>
-</div>
+<div class="paragraph">
+<p>Unresolved directive in api-docs.adoc - include::./build/generated-snippets/user-info/http-request.adoc[]
+==== Response
+Unresolved directive in api-docs.adoc - include::./build/generated-snippets/user-info/http-response.adoc[]</p>
 </div>
 </div>
 </div>
