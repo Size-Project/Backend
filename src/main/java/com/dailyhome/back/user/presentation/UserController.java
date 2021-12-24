@@ -1,7 +1,7 @@
 package com.dailyhome.back.user.presentation;
 
-import com.dailyhome.back.common.AuthConverter;
 import com.dailyhome.back.exception.user.DuplicateUserEmailException;
+import com.dailyhome.back.security.UserPrincipal;
 import com.dailyhome.back.user.domain.User;
 import com.dailyhome.back.user.presentation.dto.request.UserSignUpRequest;
 import com.dailyhome.back.user.presentation.dto.response.HttpStatusResponse;
@@ -11,6 +11,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin(value = "*")
@@ -40,9 +41,8 @@ public class UserController {
     }
 
     @GetMapping("")
-    public ResponseEntity<UserResponse> findCurrentUser(Authentication authentication) {
-        User user = AuthConverter.findUserFromAuthentication(authentication);
-        UserResponse userResponse = userService.findCurrentUser(user);
+    public ResponseEntity<UserResponse> findCurrentUser(@AuthenticationPrincipal UserPrincipal userPrincipal) {
+        UserResponse userResponse = userService.findCurrentUser(userPrincipal.getUser());
 
         //프론트에서 요구한 헤더 설정
         HttpHeaders headers = new HttpHeaders();

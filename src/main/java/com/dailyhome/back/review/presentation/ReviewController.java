@@ -1,6 +1,5 @@
 package com.dailyhome.back.review.presentation;
 
-import com.dailyhome.back.common.AuthConverter;
 import com.dailyhome.back.review.presentation.dto.request.ReviewSaveRequest;
 import com.dailyhome.back.review.presentation.dto.response.ReviewResponse;
 import com.dailyhome.back.review.service.ReviewService;
@@ -8,6 +7,7 @@ import com.dailyhome.back.security.UserPrincipal;
 import com.dailyhome.back.user.domain.User;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,9 +24,8 @@ public class ReviewController {
 
     @PostMapping("")
     public ResponseEntity<?> saveReview(@RequestBody ReviewSaveRequest reviewSaveRequest,
-                                        Authentication authentication) {
-        User user = AuthConverter.findUserFromAuthentication(authentication);
-        reviewService.save(reviewSaveRequest, user);
+                                        @AuthenticationPrincipal UserPrincipal userPrincipal) {
+        reviewService.save(reviewSaveRequest, userPrincipal.getUser());
         return ResponseEntity.ok("success");
     }
 
