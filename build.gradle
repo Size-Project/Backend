@@ -61,7 +61,7 @@ dependencies {
 }
 
 test {
-//    outputs.dir snippetsDir
+    outputs.dir snippetsDir
     useJUnitPlatform()
     finalizedBy jacocoTestReport
 }
@@ -122,13 +122,13 @@ jacocoTestCoverageVerification {
     }
 }
 
-//asciidoctor {
-//    inputs.dir snippetsDir
-//    dependsOn test
-//}
-//
-//task copyDocument(type: Copy) {
-//    dependsOn 'asciidoctor'
-//    from file("build/docs/asciidoc")
-//    into file("src/main/resources/static/docs")
-//}
+asciidoctor {
+    inputs.dir snippetsDir
+    dependsOn test
+}
+
+task copyDocument(type: Copy) {
+    dependsOn 'asciidoctor'
+    from file("build/docs/asciidoc")
+    into file("src/main/resources/static/docs")
+}

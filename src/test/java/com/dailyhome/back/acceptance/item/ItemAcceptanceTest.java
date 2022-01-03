@@ -39,7 +39,7 @@ public class ItemAcceptanceTest extends AcceptanceTest {
     @Test
     void item() {
         ItemDetailResponse response = RestAssured
-                .given().log().all()
+                .given().log().all().port(port)
                 .when().request(Method.GET, "/api/items/1")
                 .then().log().all()
                 .extract()
