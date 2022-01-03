@@ -2,11 +2,11 @@ pipeline {
     agent any
 
     stages {
-        stage('Build') {
+        stage('Test and Build') {
             steps {
-                echo 'Building..'
+                echo 'Testing and Building..'
                 sh '''
-                  ./gradlew -x test clean build
+                  ./gradlew clean build
                 '''
             }
         }
