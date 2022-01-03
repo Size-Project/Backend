@@ -15,7 +15,7 @@ pipeline {
                 echo 'Deploying....'
                 echo 'To App Server...'
                 sh '''
-                    ls
+                    nohup java -jar ./build/libs/back-1.0.jar &
                 '''
             }
         }
