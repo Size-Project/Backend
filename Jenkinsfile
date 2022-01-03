@@ -14,7 +14,9 @@ pipeline {
             steps {
                 echo 'Deploying....'
                 echo 'To App Server...'
-                ls
+                sh '''
+                    ls
+                '''
             }
         }
     }
