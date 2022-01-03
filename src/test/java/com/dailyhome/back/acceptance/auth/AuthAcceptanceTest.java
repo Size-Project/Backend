@@ -28,7 +28,7 @@ public class AuthAcceptanceTest extends AcceptanceTest {
     @Test
     void loginSuccess() {
         ExtractableResponse<Response> response = RestAssured
-                .given().log().all().body(new UserLoginRequest("test@test.com", "password"))
+                .given().log().all().port(port).body(new UserLoginRequest("test@test.com", "password"))
                 .when().request(Method.POST, "/api/users/login")
                 .then().log().all()
                 .extract();
@@ -40,7 +40,7 @@ public class AuthAcceptanceTest extends AcceptanceTest {
     @Test
     void loginFail() {
         ExtractableResponse<Response> response = RestAssured
-                .given().log().all().body(new UserLoginRequest("test@test.com", "incorrectPassword"))
+                .given().log().all().port(port).body(new UserLoginRequest("test@test.com", "incorrectPassword"))
                 .when().request(Method.POST, "/api/users/login")
                 .then().log().all()
                 .extract();
@@ -52,7 +52,7 @@ public class AuthAcceptanceTest extends AcceptanceTest {
     @Test
     void oauthLoginSuccess() {
         ExtractableResponse<Response> response = RestAssured
-                .given().log().all()
+                .given().log().all().port(port)
                 .when().request(Method.GET, "/oauth2/authorization/google")
                 .then().log().all()
                 .extract();

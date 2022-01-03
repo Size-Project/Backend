@@ -37,7 +37,7 @@ class OrderControllerTest extends DocumentationWithSecurity {
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     @Test
-    @WithAuthUser(email = "testuser@gmail.com")
+    @WithAuthUser(email = "test@test.com")
     void orderItem() throws Exception {
         //given (arrange user, items, order)
         User loggedInUser = createUser(1L);

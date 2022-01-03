@@ -10,14 +10,9 @@ import org.springframework.boot.web.server.LocalServerPort;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public abstract class AcceptanceTest {
     @LocalServerPort
-    int port;
+    protected int port;
 
     @Autowired
     protected UserRepository userRepository;
-
-    @BeforeEach
-    void init() {
-        RestAssured.port = port;
-    }
 }
 

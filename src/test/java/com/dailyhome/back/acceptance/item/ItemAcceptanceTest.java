@@ -6,12 +6,15 @@ import com.dailyhome.back.item.presentation.dto.response.ItemResponse;
 import io.restassured.RestAssured;
 import io.restassured.common.mapper.TypeRef;
 import io.restassured.http.Method;
+import io.restassured.response.Response;
+import io.restassured.specification.RequestSpecification;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.BDDAssertions.then;
 
 public class ItemAcceptanceTest extends AcceptanceTest {
 
@@ -19,11 +22,12 @@ public class ItemAcceptanceTest extends AcceptanceTest {
     @Test
     void allItems_Infinite_Scroll() {
         List<ItemResponse> response = RestAssured
-                .given().log().all()
+                .given().port(port)
                 .when().request(Method.GET, "/api/items?from=1&size=8")
                 .then().log().all()
                 .extract()
                 .as(new TypeRef<>() {});
+
 
         assertThat(response)
                 .hasSize(8)
