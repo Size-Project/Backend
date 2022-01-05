@@ -22,7 +22,7 @@ jobs:
           username: ec2-user
           host: ${{ secrets.HOST }}
           key: ${{ secrets.RSA_PRIVATE_KEY }}
-          source: "./build/libs/*.jar"
+          source: "./build.gradle"
           target: "/home/ec2-user/deploy"
           strip_components: 3
     
