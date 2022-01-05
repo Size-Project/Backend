@@ -38,8 +38,5 @@ out/
 
 .BOOT_INF
 
-application-auth.yml
-application-dev.yml
-
 src/jacoco
 src/main/resources/static/docs
